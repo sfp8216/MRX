@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MRX.DAL\MRX.DAL.csproj" />
+  </ItemGroup>
+
+
+</Project>
