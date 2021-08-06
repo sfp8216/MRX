@@ -8,14 +8,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ForecastComponent implements OnInit {
 
+
+  values:any;
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
+    this.getForecasts();
   }
   getForecasts(){
-    return this.http.get("http://localhost:5000/WeatherForecast/api/").subscribe(response = > {
-      console.log(response);
-    })
+
+    return this.http.get("http://localhost:5000/WeatherForecast/api/").subscribe(response => {
+        console.log(response);
+        this.values = response;
+    },
+    error => {
+      console.log(error);
+    });
   }
 
 }

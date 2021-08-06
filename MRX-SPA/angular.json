@@ -27,6 +27,10 @@
               "src/assets"
             ],
             "styles": [
+              "../MRX-SPA/node_modules/bootstrap/scss/bootstrap.scss",
+              "../MRX-SPA/node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "../MRX-SPA/node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
+              "../MRX-SPA/node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "src/styles.css"
             ],
             "scripts": []

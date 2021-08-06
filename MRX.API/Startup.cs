@@ -6,6 +6,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MRX.DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using MRX.DAL.Entity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.npnp;
 
 namespace MRX.API
 {
@@ -21,8 +27,27 @@ namespace MRX.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-                services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlite(Configuration.GetConnectionString("Default")));
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt => {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequiredLength = 4;
+            });
+            builder.AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.AddSignInManager<SignInManager<User>>();
+        
+            services.TryAddSingleton<ISystemClock, SystemClock>();
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
+                options.Audience = "https://localhost:5000",
+                options.Authority = "https://localhost:5000/identity/"
+            });
+
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite(Configuration.GetConnectionString("Default")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -34,6 +59,12 @@ namespace MRX.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+            app.UseCors(builder => {
+                builder.AllowAnyHeader();
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
