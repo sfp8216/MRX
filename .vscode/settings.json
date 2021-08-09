@@ -1,5 +1,7 @@
 {
     "omnisharp.disableMSBuildDiagnosticWarning": true,
     "omnisharp.enableAsyncCompletion": true,
-    "omnisharp.enableImportCompletion": true
+    "omnisharp.enableImportCompletion": true,
+    "html.format.maxPreserveNewLines": 1,
+    "html.format.wrapAttributes": "force"
 }
